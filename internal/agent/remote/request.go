@@ -14,7 +14,7 @@ func NewRequest() Request {
 }
 
 func (r Request) Request(taskEntity entity.TaskEntity) (entity.ResultEntity, error) {
-	log.Println("Remote.Request - hello")
+	log.Println("Remote.Request - start")
 
 	result := entity.ResultEntity{}
 	client := &http.Client{}
@@ -29,7 +29,7 @@ func (r Request) Request(taskEntity entity.TaskEntity) (entity.ResultEntity, err
 	response, err := client.Do(request)
 	if err != nil {
 		log.Println(err)
-		result.TaskStatus = "error"
+		result.TaskStatus = entity.ERROR
 		return result, err
 	}
 
@@ -39,13 +39,13 @@ func (r Request) Request(taskEntity entity.TaskEntity) (entity.ResultEntity, err
 	}
 
 	result.TaskID = taskEntity.ID
-	result.TaskStatus = "done"
+	result.TaskStatus = entity.DONE
 	result.ResponseHttpStatusCode = response.StatusCode
 	result.ResponseHeaders = headers
 	result.ResponseBodyLength = response.Header.Get("Content-Length")
 
 	log.Println("Remote.Request - Result is:", result)
 
-	log.Println("Remote.Request - bye")
+	log.Println("Remote.Request - end")
 	return result, nil
 }

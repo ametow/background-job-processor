@@ -1,0 +1,4 @@
+listen: :8080
+database_dsn: postgres://root:password@localhost:5432/tasker
+new_task_check_interval_ms: 500
+worker_count: 1000

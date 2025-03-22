@@ -41,25 +41,25 @@ func generateRandom(size int) ([]byte, error) {
 const IDLength int = 4
 
 func (th TaskHandler) CreateTask(w http.ResponseWriter, r *http.Request) {
-	log.Println("Handler CreateTask - hello")
+	log.Println("Handler CreateTask - start")
 
 	if r.Header.Get("Content-Type") != "application/json" {
 		http.Error(w, localError.WrongContentType.Error(), http.StatusBadRequest)
 		return
 	}
 
-	var decVal struct { // decoded value
+	var payload struct {
 		Method  string
 		URL     string
-		Headers entity.Headers //http.Header
+		Headers entity.Headers
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&decVal); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	log.Println("Handler CreateTask - request: Task", decVal)
+	log.Println("Handler CreateTask - request: Task", payload)
 
 	bytesTaskID, err := generateRandom(IDLength)
 	if err != nil {
@@ -70,28 +70,27 @@ func (th TaskHandler) CreateTask(w http.ResponseWriter, r *http.Request) {
 
 	te := entity.TaskEntity{
 		ID:      taskID,
-		Method:  decVal.Method,
-		URL:     decVal.URL,
-		Headers: decVal.Headers,
+		Method:  payload.Method,
+		URL:     payload.URL,
+		Headers: payload.Headers,
 	}
 	th.taskService.CreateTask(te)
 
 	w.Header().Set("content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
-	encVal := struct { // encoded value
+	response := struct {
 		ID string `json:"id"`
 	}{
 		ID: taskID,
 	}
 
-	log.Println("Handler CreateTask - bye")
-	json.NewEncoder(w).Encode(encVal)
-
+	log.Println("Handler CreateTask - end")
+	json.NewEncoder(w).Encode(response)
 }
 
 func (th TaskHandler) GetTaskStatus(w http.ResponseWriter, r *http.Request) {
-	log.Println("Handler GetTaskStatus - hello")
+	log.Println("Handler GetTaskStatus - start")
 	taskID := chi.URLParam(r, "taskID")
 
 	log.Println("Handler GetTaskStatus, taskID", taskID)
@@ -104,6 +103,6 @@ func (th TaskHandler) GetTaskStatus(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	log.Println("Handler GetTaskStatus - bye")
+	log.Println("Handler GetTaskStatus - end")
 	json.NewEncoder(w).Encode(re)
 }

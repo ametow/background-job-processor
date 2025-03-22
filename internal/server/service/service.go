@@ -22,24 +22,24 @@ func NewTaskService(taskStorage TaskStorage) TaskService {
 }
 
 func (taskService TaskService) CreateTask(te entity.TaskEntity) {
-	log.Println("Service CreateTask - hello")
+	log.Println("Service CreateTask - start")
 
 	err := taskService.taskStorage.CreateTask(te)
 	if err != nil {
 		log.Println(err)
 	}
 
-	log.Println("Service CreateTask - bye")
+	log.Println("Service CreateTask - end")
 }
 
 func (taskService TaskService) GetTaskStatus(taskID string) (entity.ResultEntity, error) {
-	log.Println("Service GetTaskStatus - hello")
+	log.Println("Service GetTaskStatus - start")
 
 	re, err := taskService.taskStorage.GetTaskStatus(taskID)
 	if err != nil {
 		log.Println(err)
 	}
 
-	log.Println("Service GetTaskStatus - bye")
+	log.Println("Service GetTaskStatus - end")
 	return re, err
 }

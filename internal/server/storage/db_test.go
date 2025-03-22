@@ -134,7 +134,7 @@ func TestTaskStorage_GetTaskStatus_RealDB(t *testing.T) {
 				taskID: "abc",
 				result: entity.ResultEntity{
 					TaskID:                 "abc",
-					TaskStatus:             "done",
+					TaskStatus:             entity.DONE,
 					ResponseHttpStatusCode: 200,
 					ResponseHeaders:        entity.Headers{"Result-Header1": "sample-data", "Content-type": "JSON"},
 					ResponseBodyLength:     "50",
@@ -143,7 +143,7 @@ func TestTaskStorage_GetTaskStatus_RealDB(t *testing.T) {
 			fields: ts,
 			want: entity.ResultEntity{
 				TaskID:                 "abc",
-				TaskStatus:             "done",
+				TaskStatus:             entity.DONE,
 				ResponseHttpStatusCode: 200,
 				ResponseHeaders:        entity.Headers{"Result-Header1": "sample-data", "Content-type": "JSON"},
 				ResponseBodyLength:     "50",

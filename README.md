@@ -1,7 +1,3 @@
-Here’s a simplified and clearer version of your text:  
-
----
-
 # Tasker – Job Scheduler  
 
 ### Project Overview  
@@ -29,7 +25,8 @@ Set the PostgreSQL database connection string (DSN) in the environment variable 
   - Run `cmd/agent/agent.go`  
 
 #### Run the Server  
-- Start the server:  
+- Start the server:
+  - Prepare: set DATABASE_DSN environment variable
   - Run `cmd/main/main.go`  
 - Test a **POST request**:  
   - File: `internal/server/storage/db_test.go`  

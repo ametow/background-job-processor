@@ -12,9 +12,9 @@ import (
 func main() {
 	storage := storage.NewStorage()
 	remoteRequest := remote.NewRequest()
-	service := service.NewService(storage, remoteRequest)
-	newTaskCheckInterval := 500 * time.Millisecond
+	service := service.New(storage, remoteRequest)
+	newTaskCheckInterval := 1000 * time.Millisecond
 
 	log.Println("Getting new tasks from storage...")
-	service.StartGettingNewTasks(newTaskCheckInterval)
+	service.Start(newTaskCheckInterval)
 }

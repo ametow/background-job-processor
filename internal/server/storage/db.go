@@ -46,7 +46,7 @@ func NewTaskStorage() *TaskStorage {
 }
 
 func (ts TaskStorage) CreateTask(te entity.TaskEntity) error {
-	log.Println("Storage CreateTask - hello")
+	log.Println("Storage CreateTask - start")
 
 	_, err := ts.DB.Exec(
 		`INSERT INTO tasks (task_id , task_request_method , task_url, task_headers)
@@ -56,13 +56,13 @@ func (ts TaskStorage) CreateTask(te entity.TaskEntity) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Storage CreateTask - bye")
+	log.Println("Storage CreateTask - end")
 
 	return nil
 }
 
 func (ts TaskStorage) GetTaskStatus(taskID string) (entity.ResultEntity, error) {
-	log.Println("Storage GetTaskStatus - hello")
+	log.Println("Storage GetTaskStatus - start")
 
 	row := ts.DB.QueryRow(
 		`SELECT task_status, result_http_status_code, result_headers, result_body_length
@@ -86,7 +86,7 @@ func (ts TaskStorage) GetTaskStatus(taskID string) (entity.ResultEntity, error) 
 	}
 	re.TaskID = taskID
 
-	log.Println("Storage GetTaskStatus - bye")
+	log.Println("Storage GetTaskStatus - end")
 
 	return re, nil
 }

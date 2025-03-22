@@ -29,7 +29,7 @@ func NewStorage() *Storage {
 }
 
 func (s *Storage) GetNewTasks() ([]entity.TaskEntity, error) {
-	log.Println("Storage.getNewTasks - hello")
+	log.Println("Storage.getNewTasks - start")
 
 	if s.DB == nil {
 		return nil, errors.New("you haven`t opened the database connection")
@@ -52,7 +52,7 @@ func (s *Storage) GetNewTasks() ([]entity.TaskEntity, error) {
 
 	defer stmt.Close()
 
-	rows, err := stmt.Query("in_process", "new")
+	rows, err := stmt.Query(entity.IN_PROCESS, entity.NEW)
 	if err != nil {
 		return nil, err
 	}
@@ -74,14 +74,14 @@ func (s *Storage) GetNewTasks() ([]entity.TaskEntity, error) {
 	}
 
 	log.Println("Storage.getNewTasks got new tasks:", newTasks)
-	log.Println("Storage.getNewTasks - bye")
+	log.Println("Storage.getNewTasks - end")
 
 	err = tx.Commit()
 
 	return newTasks, err
 }
 func (s *Storage) BulkAddTaskResults(results []entity.ResultEntity) error {
-	log.Println("Storage.BulkAddTaskResults - hello")
+	log.Println("Storage.BulkAddTaskResults - start")
 
 	if s.DB == nil {
 		return errors.New("you haven`t opened the database connection")
@@ -110,13 +110,13 @@ func (s *Storage) BulkAddTaskResults(results []entity.ResultEntity) error {
 		}
 	}
 
-	log.Println("Storage.BulkAddTaskResults - bye")
+	log.Println("Storage.BulkAddTaskResults - end")
 
 	return tx.Commit()
 }
 
 func (s *Storage) BulkAddTaskResultsViaCh(resultCh chan entity.ResultEntity) error {
-	log.Println("Storage.BulkAddTaskResultsViaCh - hello")
+	log.Println("Storage.BulkAddTaskResultsViaCh - start")
 
 	if s.DB == nil {
 		return errors.New("you haven`t opened the database connection")
@@ -153,7 +153,7 @@ loop:
 		}
 	}
 
-	log.Println("Storage.BulkAddTaskResultsViaCh - bye")
+	log.Println("Storage.BulkAddTaskResultsViaCh - end")
 
 	return tx.Commit()
 }
